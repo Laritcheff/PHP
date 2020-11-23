@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <title>Заполнение форм</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="PHP">
+    <meta name="keywords" content="PHP forms">
+    <link rel="stylesheet" type="text/css" href="css/phpMM.css">
+</head>
+
+<body>
+    <h1>Вступайте в наш виртуальный клуб!</h1>
+    <h3>Пожалуйста, введите ниже свои данные для связи в Интернете:</h3>
+    <form id="form" method="post" action="register_form.php" enctype="multipart/form-data">
+        <fieldset>
+            <label for="first_Name">Имя</label>
+            <input type="text" id="first_Name" name="first_Name"><br>
+            <label for="last_Name">Фамилия</label>
+            <input type="text" id="last_Name" name="last_Name"><br>
+            <label for="email">E-mail</label>
+            <input type="text" id="email" name="email" /><br />
+            <label for="facebook">facebook</label>
+            <input type="text" id="facebook" name="facebook"><br>
+            <label for="twitter">Twitter</label>
+            <input type="text" id="twitter" name="twitter"><br>
+            <label for="bio">Расскажите о себе</label><br>
+            <textarea id="bio" name="bio"></textarea><br>
+            <label for='user_image'>Add photo:</label><br>
+            <input type="hidden" name="max_file_size" value="20000000"><br>
+            <input type="file" id='user_image' name="user_image">
+            <input type="submit" value="Вступить в клуб " name="submit">
+            <input type="reset" value="Очистить и начать все сначала" name="reset">
+        </fieldset>
+    </form>
+</body>
+
+</html>
