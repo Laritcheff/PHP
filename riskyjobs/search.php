@@ -14,6 +14,14 @@
 // Получаем данные из формы
 $user_search = $_GET['usersearch'];
 $sort=$_GET['sort'];
+//для разбиения на страницы
+if(isset($_GET['page'])){//екунщая страница
+$cur_PAGE=$_GET['page'];
+}else{
+$cur_page=1;
+}
+$resulats_page=5;//кол-во записей на странице.
+$skip = (($cur_page-1)*$result_page);
 
 // Создаем таблицу с результатами
 echo '<table border="0" cellpadding="2">';
@@ -71,10 +79,10 @@ $query = $query . " WHERE ".implode(' OR ', $search);
         $query.=" ORDER BY date_posted DESC";
           break;
         default:
-  }
-
+  }  
   return $query;
 }
+
 /*
 формирует гиперссылки для сортировки
 $user_search - запрос пользователя из $_GET
@@ -113,6 +121,10 @@ function generate_links($user_search, $sort){
 $query=build_query($user_search, $sort);
 
 $result = mysqli_query($connect, $query);
+$total = mysqli_num_rows($result);
+$num_pages = ceil($total/$results_page);
+
+
 while ($row = mysqli_fetch_array($result)) {
     echo '<tr class="results">';
     echo '<td valign="top" width="20%">' . $row['title'] . '</td>';
