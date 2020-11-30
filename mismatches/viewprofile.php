@@ -1,42 +1,25 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])){
-	if(isset($_COOKIE['user_id']) && isset($_COOKIE['username'])){
-	  $_SESSION['user_id']=$_COOKIE['user_id'];
-	  $_SESSION['username']=$_COOKIE['username'];
-	  }
-	}
-
-?>
-
-<!DOCTYPE html>
-<html">
-<head>
-  <meta charset="utf-8">
-  <title>Несоответствия - просмотр профиля</title>
-  <link rel="stylesheet" type="text/css" href="styles/style.css">
-</head>
-
-<body>
-  <h3>Несоответствия. Просмотр профиля</h3>
-
-<?php
+require_once 'startsession.php';
 require_once 'app_config.php';
+$title = 'Несоответствия. Просмотр профиля';
+require_once 'head.php';
+require_once 'nav.php';
+
 // Подключение к БД
 $connect = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
-	or handle_error("Возникла проблема с подключением к базе данных.", error_get_last());
+	or handle_error("Возникла проблема с подключением к базе данных.", error_get_last()); 
 mysqli_set_charset($connect, 'UTF8');
 
 // Вывод данных из БД
 if (!isset($_GET['user_id'])) {
-	$query = "SELECT username, first_name, last_name, gender, birthdate, city, picture FROM mismatch_user WHERE user_id = '" . $_SESSION['user_id']."'";
+	$query = "SELECT username, first_name, last_name, gender, birthdate, city, picture FROM mismatch_user WHERE user_id = '" . $_SESSION['user_id'] . "'";
 } else {
 	$query = "SELECT username, first_name, last_name, gender, birthdate, city, picture FROM mismatch_user WHERE user_id = '" . $_GET['user_id'] . "'";
 }
 $data = mysqli_query($connect, $query);
 
 // Вывод данных о пользователе
-if (mysqli_num_rows($data) == 1) {
+if (mysqli_num_rows($data) == 1) { 
 	$row = mysqli_fetch_array($data);
     echo '<table>';
     if (!empty($row['username'])) {
@@ -76,16 +59,16 @@ if (mysqli_num_rows($data) == 1) {
 		echo '<tr><td class="label">Фото:</td><td><img src="' . UPLOADPATH . $row['picture'] . '" alt="Фото профиля"></td></tr>';
     } // фото
     echo '</table>';
-
+	
     if (!isset($_GET['user_id']) || ($_SESSION['user_id'] == $_GET['user_id'])) {
 		echo '<p>Вы хотите <a href="editprofile.php">отредактировать ваш профиль</a>?</p>';
     }
 } // конец вывода инфо о пользователе
   else {
-	  handle_error('Возникла проблема с отображением Вашего профиля.', 'Проблема с выводом профиля '. $_SESSION['user_id']);
+	  handle_error('Возникла проблема с отображением Вашего профиля.', 'Проблема с выводом профиля '.$_SESSION['user_id']);
 }
 
 mysqli_close($connect);
 ?>
-</body>
+</body> 
 </html>
