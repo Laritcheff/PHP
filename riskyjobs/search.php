@@ -82,7 +82,6 @@ $query = $query . " WHERE ".implode(' OR ', $search);
   }  
   return $query;
 }
-
 /*
 формирует гиперссылки для сортировки
 $user_search - запрос пользователя из $_GET
@@ -122,9 +121,22 @@ function generate_links($user_search, $sort){
   /*
 создает навигацию по странице
 */
-function generate_pages(){
-
-
+function generate_pages($user_search, $sort, $cur_page, $num_pages){
+    $page_links='';
+if($cur_page>1){
+$page_links='<a href=" '.$_SERVER['PHP_SELF'].'?usersearch='.$user_search.'&sort='.$sort.'&page='.($cur_page-1).'"> << </a>';
+}
+for($i=1;$i<=$num_pages;$i++){
+      if($i==$cur_page){
+       $page_links.=" $i"; 
+}else{
+    $page_links.='<a href=" '.$_SERVER['PHP_SELF'].'?usersearch='.$user_search.'&sort='.$sort.'&page='.$i.'"> '. $i.' </a>';
+          }
+      }
+if($cur_page<$num_pages){
+$page_links.='<a href=" '.$_SERVER['PHP_SELF'].'?usersearch='.$user_search.'&sort='.$sort.'&page='.($cur_page+1).'"> >> </a>';
+}
+return $page_links;
 }
 
 
@@ -146,9 +158,8 @@ while ($row = mysqli_fetch_array($result)) {
     echo '</tr>';
 } 
 echo '</table>';
-
+  if($num_pages>1) echo generate_pages($user_search,$sort,$cur_page,$num_pages);
 mysqli_close($connect);
 ?>
-
 </body>
 </html>
