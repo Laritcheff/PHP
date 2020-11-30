@@ -16,12 +16,12 @@ $user_search = $_GET['usersearch'];
 $sort=$_GET['sort'];
 //для разбиения на страницы
 if(isset($_GET['page'])){//екунщая страница
-$cur_PAGE=$_GET['page'];
+$cur_page=$_GET['page'];
 }else{
 $cur_page=1;
 }
-$resulats_page=5;//кол-во записей на странице.
-$skip = (($cur_page-1)*$result_page);
+$results_page=5;//кол-во записей на странице.
+$skip = (($cur_page-1)*$results_page);
 
 // Создаем таблицу с результатами
 echo '<table border="0" cellpadding="2">';
@@ -121,9 +121,11 @@ function generate_links($user_search, $sort){
 $query=build_query($user_search, $sort);
 
 $result = mysqli_query($connect, $query);
-$total = mysqli_num_rows($result);
+$total= mysqli_num_rows($result);
 $num_pages = ceil($total/$results_page);
-
+$query.=" LIMIT $skip, $results_page";
+echo $query;
+$result = mysqli_query($connect, $query);
 
 while ($row = mysqli_fetch_array($result)) {
     echo '<tr class="results">';
