@@ -118,6 +118,16 @@ function generate_links($user_search, $sort){
           }
        return $sort_links; 
       }
+
+  /*
+создает навигацию по странице
+*/
+function generate_pages(){
+
+
+}
+
+
 $query=build_query($user_search, $sort);
 
 $result = mysqli_query($connect, $query);
