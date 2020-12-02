@@ -39,6 +39,13 @@
       echo '<p class="error">Вы не указали номер телефона.</p>';
       $output_form = 'yes';
     }
+    $pattern='/^\(?[1-9]\d{2}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$/';
+    if (!preg_match($pattern, $phone)){
+    echo'<p class="error">Вы указали неверный номер телефона.</p>'; 
+      $output_form = 'yes';
+    }     
+    $pattern2 = '/[\s\(\)\-]/';
+    $new_phone = preg_replace($pattern2,'',$phone);
 
     if (empty($job)) {
       echo '<p class="error">Вы не указали, какая работа Вам нужна.</p>';
@@ -87,8 +94,8 @@
 <?php
   }
   else if ($output_form == 'no') {
-    echo '<p>' . $first_name . ' ' . $last_name . ', спасибо за регистрацию на сайте "Рискованные работы"!</p>';
-
+    echo '<p>' . $first_name . ' ' . $last_name . ', спасибо за регистрацию на сайте "Рискованные работы"!
+Ваш номер телефона',$new_phone.'</p>';
   }
 ?>
 
