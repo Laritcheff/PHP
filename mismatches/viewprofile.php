@@ -23,7 +23,7 @@ if (mysqli_num_rows($data) == 1) {
 	$row = mysqli_fetch_array($data);
     echo '<table>';
     if (!empty($row['username'])) {
-		echo '<tr><td class="label">Логин:</td><td>' . $row['username'] . '</td></tr>';
+		echo '<tr><td class="label">ЛогTин:</td><td>' . $row['username'] . '</td></tr>';
     }  // логин
     if (!empty($row['first_name'])) {
 		echo '<tr><td class="label">Имя:</td><td>' . $row['first_name'] . '</td></tr>';
