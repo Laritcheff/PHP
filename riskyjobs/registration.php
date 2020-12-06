@@ -11,7 +11,11 @@
   <h3>Рискованные работы - Регистрация</h3>
 
 <?php
-  if (isset($_POST['submit'])) {
+require_once 'app_config.php';
+$connect = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+	or handle_error("Возникла проблема с подключением к базе данных.", error_get_last()); 
+mysqli_set_charset($connect, 'UTF8');
+   if (isset($_POST['submit'])) {
     $first_name = $_POST['firstname'];
     $last_name = $_POST['lastname'];
     $email = $_POST['email'];
@@ -19,7 +23,7 @@
     $job = $_POST['job'];
     $resume = $_POST['resume'];
     $output_form = 'no';
-
+    
     if (empty($first_name)) {
       echo '<p class="error">Вы не указали свое имя.</p>';
       $output_form = 'yes';
@@ -62,6 +66,7 @@
   }
 
   if ($output_form == 'yes') {
+
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -94,9 +99,14 @@
 <?php
   }
   else if ($output_form == 'no') {
-    echo '<p>' . $first_name . ' ' . $last_name . ', спасибо за регистрацию на сайте "Рискованные работы"!
-Ваш номер телефона',$new_phone.'</p>';
-  }
+    $query="INSERT INTO riskyjobs.applicants(firstname, lastname, email, phone, job, resume)
+    VALUES('$first_name','$last_name','$email','$phone','$job','$resume')";
+     mysqli_query($connect, $query) or handle_error('Request error',mysqli_error($connect));
+     echo '<p>' . $first_name . ' ' . $last_name . ', спасибо за регистрацию на сайте "Рискованные работы"!</br>
+    Ваш номер телефона ',$new_phone.'</p>';
+    
+   
+      }
 ?>
 
 </body>

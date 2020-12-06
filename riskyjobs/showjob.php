@@ -9,7 +9,6 @@
   <img src="images/riskyjobs_title.gif" alt="Risky Jobs">
   <img src="images/riskyjobs_fireman.jpg" alt="Risky Jobs" style="float:right">
 <?php
-//require_once 'search.php';
 // Подключение к БД
 require_once 'app_config.php';
 $connect = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
@@ -19,13 +18,17 @@ $job_id=$_GET['job_id'];
 $query="SELECT * FROM riskyjobs WHERE job_id='$job_id'";
 $current_job = mysqli_query($connect, $query);
 $row = mysqli_fetch_array($current_job);
+
+echo'<table border="0" cellpadding="2">';
 echo '<tr class="results">';
     echo '<td valign="top" width="20%">' . $row['title']. '</td>';    
     echo '<td valign="top" width="50%">' . $row['description'].'</td>';
     echo '<td valign="top" width="10%">' . $row['city'] . '</td>';
     echo '<td valign="top" width="20%">' . $row['date_posted'].'</td>';
     echo '</tr>';
- 
+echo'</table>';
 ?>
+<form method="get" action="search.php">
+<input type="submit" name="submit" value="Zurück">
 </body>
 </html>
