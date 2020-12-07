@@ -19,13 +19,14 @@ $job_id=$_GET['job_id'];
 $query="SELECT * FROM riskyjobs WHERE job_id='$job_id'";
 $current_job = mysqli_query($connect, $query);
 $row = mysqli_fetch_array($current_job);
-echo '<tr class="results">';
+
+    echo '<tr class="results">';
     echo '<td valign="top" width="20%">' . $row['title']. '</td>';    
     echo '<td valign="top" width="50%">' . $row['description'].'</td>';
     echo '<td valign="top" width="10%">' . $row['city'] . '</td>';
     echo '<td valign="top" width="20%">' . $row['date_posted'].'</td>';
     echo '</tr>';
- 
+    echo '</table>';
 ?>
 </body>
 </html>

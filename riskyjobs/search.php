@@ -150,7 +150,7 @@ $query.=" LIMIT $skip, $results_page";
 $result = mysqli_query($connect, $query);
 
 while ($row = mysqli_fetch_array($result)) {
-  echo $query;
+  
     echo '<tr class="results">';
     echo '<td valign="top" width="20%">' . '<a href="showjob.php?job_id='.$row['job_id'].'">'.$row['title'].'</a>' . '</td>';    
     echo '<td valign="top" width="50%">' . substr($row['description'], 0, 150).'...' . '</td>';
