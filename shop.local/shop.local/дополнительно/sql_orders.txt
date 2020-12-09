@@ -1,0 +1,12 @@
+-- Создание таблицы для заказов
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(100) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `comments` text NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `products` text NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1'
+);

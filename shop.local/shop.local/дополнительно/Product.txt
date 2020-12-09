@@ -1,0 +1,116 @@
+public static function getProductsListByCategory($categoryId=false) {
+    if($categoryId) {
+        $connect = mysqli_connect(HOST, USER, PASSWORD, DBNAME);
+        $products = array();
+        
+        $query = "SELECT id, name, price, image, is_new FROM product WHERE status='1' AND category_id='$categoryId' ORDER BY id DESC LIMIT ".self::SHOW_BY_DEFAULT;
+        
+        $result = mysqli_query($connect, $query);
+        $i=0;
+        while($row = mysqli_fetch_array($result)) {
+            $products[$i]['id'] = $row['id'];
+            $products[$i]['name'] = $row['name'];
+            $products[$i]['price'] = $row['price'];
+            $products[$i]['image'] = $row['image'];
+            $products[$i]['is_new'] = $row['is_new'];
+            $i++;
+        }
+        return $products;
+    }    
+} //end getProductsListByCategory()
+
+
+
+
+// ищем общее кол-во товаров в категории
+public static function getTotalProductsInCategory($categoryId) {
+    $connect = mysqli_connect(HOST, USER, PASSWORD, DBNAME);    
+    $query = "SELECT count(id) AS count FROM product WHERE status='1' AND category_id = '$categoryId'";    
+    $result = mysqli_query($connect, $query);
+    $row = mysqli_fetch_array($result);
+    return $row['count'];
+} // end  getTotalProductsInCategory()
+
+
+
+/* из БД получаем ВСЮ инфо о товарах, чьи id есть в сессии (=в корзине)
+$idsArray - массив с id товаров из корзины
+*/
+public static function getProductsListToCart($idsArray) {
+    $products = array();
+    $idsString = implode(',', $idsArray);
+    
+    $connect = mysqli_connect(HOST, USER, PASSWORD, DBNAME);
+    $query = "SELECT * FROM product WHERE status ='1' AND id IN ($idsString)";
+    $result = mysqli_query($connect, $query);
+    $i = 0;
+    while($row = mysqli_fetch_array($result)) {
+        $products[$i]['id'] = $row['id'];
+        $products[$i]['name'] = $row['name'];
+        $products[$i]['price'] = $row['price'];
+        $i++;
+    }
+    return $products;
+    
+} // end getProductsListToCart()
+
+
+//Возвращает список всех товаров магазина
+public static function getAllProductsList() {
+    $connect = mysqli_connect(HOST, USER, PASSWORD, DBNAME);
+    $query = "SELECT id, name, price FROM product ORDER BY id ASC";
+    $result = mysqli_query($connect, $query);
+    
+    $allProductsList = array();
+    $i=0;
+    while($row = mysqli_fetch_array($result)) {
+        $allProductsList[$i]['id'] = $row['id'];
+        $allProductsList[$i]['name'] = $row['name'];
+        $allProductsList[$i]['price'] = $row['price'];
+        $i++;
+    }
+    
+    return $allProductsList;
+} // end getAllProductsList()
+
+
+
+// Удаление товара в админпанели
+public static function deleteProductById($id) {
+    $connect = mysqli_connect(HOST, USER, PASSWORD, DBNAME);
+    $query = "DELETE FROM product WHERE id='$id'";
+    $result = mysqli_query($connect, $query);
+    return $result;
+} // end deleteProductById($id)
+
+
+
+// Добавление нового товара в БД
+public static function createProduct($name, $price, $category_id, $brand, $availability, $description, $is_new, $status, $image_path) {
+    $connect = mysqli_connect(HOST, USER, PASSWORD, DBNAME);
+
+    $query = "INSERT INTO product(name, category_id, price, availability, brand, image, description, is_new, status) VALUES('$name', '$category_id', '$price', '$availability', '$brand', '$image_path', '$description', '$is_new', '$status')";
+    mysqli_query($connect, $query) or die('Ошибка добавления товара в базу данных');
+    
+} // end createProduct()
+
+
+
+// Редактирование товара
+public static function updateProduct($id, $name, $price, $category_id, $brand, $availability, $description, $is_new, $status, $image_path) {
+    $connect = mysqli_connect(HOST, USER, PASSWORD, DBNAME);
+
+    $query = "UPDATE product SET 
+            name = '$name', 
+            price = '$price', 
+            category_id = '$category_id', 
+            brand = '$brand', 
+            availability = '$availability', 
+            description = '$description', 
+            is_new = '$is_new', 
+            status = '$status',
+            image = '$image_path'
+        WHERE id = '$id'";
+    $result = mysqli_query($connect, $query);
+
+} // end updateProduct()

@@ -1,0 +1,9 @@
+--Создание таблицы с пользователями
+
+CREATE TABLE user (
+	id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name varchar(70),
+    email varchar(100),
+    password varchar (50)
+);
+

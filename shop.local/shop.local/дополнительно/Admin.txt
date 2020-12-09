@@ -1,0 +1,44 @@
+для метода actionCreate в AdminProductController.php
+
+// Проверка ошибок заполнения формы
+    $error = false; // Флаг ошибок в форме            
+    if (!isset($name) || empty($name)) {
+        $error = '<p>Заполните поле Название товара.</p>';
+    }
+    if(!is_numeric($price)) {
+        $error = '<p>Введите число в поле Цена.</p>';
+    }
+    if ($error == false) {   // Если ошибок нет
+        $id = Product::createProduct($name, $price, $category_id, $brand, $availability, $description, $is_new, $status, $image_path); // Добавляем новый товар в БД          
+        header("Location: /admin/product");// Перенаправляем пользователя на страницу управлениями товарами
+    }
+
+
+
+    
+// Загрузка фото
+    if(is_uploaded_file($_FILES['image']['tmp_name'])) { //'image' - атрибут name из поля для добавления фото в форме
+        // Формируем имя изображению для загрузки на сервер
+        $image_name = $_SERVER['DOCUMENT_ROOT'] . '/template/images/products/' . time() . '_' . $_FILES['image']['name'];         
+        // Перемещаем в нужную папку
+        move_uploaded_file($_FILES['image']['tmp_name'], $image_name);
+        // Формируем адрес изображения для браузера (будет передан в БД)
+        $image_path = web_path($image_name); 
+    } else {
+        $image_path = web_path($image_name); 
+    }            
+            
+
+для файла Category.php
+// Получение из БД конкретной категории (для редактирования)
+    public static function getCategoryById($id) {
+        $connect = mysqli_connect(HOST, USER, PASSWORD, DBNAME);
+
+        $query = "SELECT * FROM category WHERE id = '$id'";
+        $result = mysqli_query($connect, $query);
+        
+        return mysqli_fetch_array($result);
+    }  // end getCategoryById() 
+
+
+    

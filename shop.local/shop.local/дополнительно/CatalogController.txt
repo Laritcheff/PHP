@@ -1,0 +1,13 @@
+public function actionCategory($categoryId) {
+    //получаем список категорий
+    $categories = array();
+    $categories = Category::getCategoriesList();
+    //получаем список товаров
+    $categoryProducts = array();
+    $categoryProducts = Product::getProductsListByCategory($categoryId);
+    require_once ROOT.'/views/catalog/category.php';
+    return true;
+} // end actionCategory()
+
+
+
