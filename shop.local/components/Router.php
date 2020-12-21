@@ -16,13 +16,13 @@
                 $uri=$this->getURI();
                     //просмотр массива с маршрутами и сравниваем ключи с содержимым адресной строки
                 foreach ($this -> routes as $routeKey => $path){
-                    if(preg_math("~$routeKey~", $uri)){
-                        $segmrnts=explode('/', $path);
+                    if(preg_match("~$routeKey~", $uri)){
+                        $segments=explode('/', $path);
                         //имя контроллера
                         $controllerName = array_shift($segments).'Controller';  
                         $controllerName=ucfirst($controllerName);   
                         //сoздаем имя метода
-                        $action='action'.ucfirst(array_shift($segments));
+                        $actionName='action'.ucfirst(array_shift($segments));
                         //подключение файла контроллера
                         $controllerFile=ROOT."/controllers/$controllerName.php";
                         if(file_exists($controllerFile)){
@@ -30,12 +30,11 @@
                         }    
                             //создание объекта
                          $controllerObject = new $controllerName;
-                         $reult=$controllerObject->$actionName();
+                         $result=$controllerObject->$actionName();
                         if($result!=null){break;}   
                     }
                 }
-
-                echo $uri;     
+                                    
             } 
                                
         }
