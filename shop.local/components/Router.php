@@ -17,12 +17,17 @@
                     //просмотр массива с маршрутами и сравниваем ключи с содержимым адресной строки
                 foreach ($this -> routes as $routeKey => $path){
                     if(preg_match("~$routeKey~", $uri)){
-                        $segments=explode('/', $path);
+
+                        $internalRoute=preg_replace('`$routeKey`', $path, $uri)
+                        $segments=explode('/', $internalRoute);
                         //имя контроллера
                         $controllerName = array_shift($segments).'Controller';  
                         $controllerName=ucfirst($controllerName);   
                         //сoздаем имя метода
                         $actionName='action'.ucfirst(array_shift($segments));
+
+                        //делаем список параметров
+                        $parameters=$segments;    
                         //подключение файла контроллера
                         $controllerFile=ROOT."/controllers/$controllerName.php";
                         if(file_exists($controllerFile)){
@@ -31,6 +36,9 @@
                             //создание объекта
                          $controllerObject = new $controllerName;
                          $result=$controllerObject->$actionName();
+                         $result=call_user_func_array(array($controllerObject, $actionName), $parameters);   
+
+
                         if($result!=null){break;}   
                     }
                 }

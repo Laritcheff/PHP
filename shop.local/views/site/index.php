@@ -25,80 +25,25 @@
                     <div class="col-sm-9 padding-right">
                         <div class="features_items"><!--features_items-->
                             <h2 class="title text-center">Последние товары</h2>
+                                <?php foreach($latestProducts as $product): ?>
                             <div class="col-sm-4">
                                 <div class="product-image-wrapper">
                                     <div class="single-products">
                                         <div class="productinfo text-center">
-                                            <div class="img"><img src="images/products/i001.jpg" alt=""></div>
-                                            <h2>56 р.</h2>
-                                            <p>Название товара</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>В корзину</a>
+                                             <a href="/product/<?php echo $product['id']; ?>">
+                                            <div class="img"><img src="<?php echo $product['image']; ?>" alt=""></div>
+                                            </a>
+                                            <h2><?php echo $product['price']; ?> р.</h2>
+                                            <p><a href="/product/<?php echo $product['id']; ?>">
+                                                   <?php echo $product['name']; ?> 
+                                            </a>
+                                                </p>
+                                            <a href="/product/<?php echo $product['id']; ?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>В корзину</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <div class="img"><img src="images/products/i002.jpg" alt=""></div>
-                                            <h2>56 р.</h2>
-                                            <p>Название товара</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>В корзину</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <div class="img"><img src="images/products/i003.jpg" alt=""></div>
-                                            <h2>56 р.</h2>
-                                            <p>Название товара</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>В корзину</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <div class="img"><img src="images/products/i004.jpg" alt=""></div>
-                                            <h2>56 р.</h2>
-                                            <p>Название товара</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>В корзину</a>
-                                        </div>
-                                        <img src="images/home/new.png" class="new" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <div class="img"><img src="images/products/i005.jpg" alt=""></div>
-                                            <h2>56 р.</h2>
-                                            <p>Название товара</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>В корзину</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <div class="img"><img src="images/products/i016.jpg" alt=""></div>
-                                            <h2>56 р.</h2>
-                                            <p>Название товара</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>В корзину</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            <?php endforeach; ?>
                         </div><!--features_items-->
 
                     </div>

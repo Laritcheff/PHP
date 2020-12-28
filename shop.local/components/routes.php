@@ -1,7 +1,7 @@
 <?php
     return array(
         'catalog'=>'catalog/index',
-        'product'=>'product/view',
+        'product/([0-9]+)'=>'product/view/$1',
 
         ''=>'site/index',
 );
