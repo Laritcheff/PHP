@@ -1,21 +1,24 @@
 <?php
     function findSimple($a, $b){
         for($i=0;$a<=$b;$i++){           
-            $simple[]=$a;  
-            /*echo $a.'<br>';   */          
+            $simple[]=$a;                       
                     $a++;
-        }
+        }  $count=0;
             foreach($simple as $v){
-                        for($k=2;$k<7;$k++){
-                      if($v%$k==0){
-echo $v.'<br>';
-                        unset($simple[$v]);}  
+                        for($k=2;$k<$b;$k++){
+                      if(($v%$k==0)&&($v!=$k)){                            
+                        unset($simple[$count]);
+                            /*echo $v.'<br>';*/}  
+                        }  
+                            $count++;                               
                         }
-           
-                                    
+                          return $simple;
     
     }
-    }
-        findSimple(5,50);
-echo $a.'<br>'; 
+            
+    
+       echo findSimple(1,1250);
+           
+ 
+
 ?>
